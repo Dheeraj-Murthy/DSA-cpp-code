@@ -1,24 +1,29 @@
 #include<unordered_map>
 #include<iostream>
+#include<vector>
 using namespace std;
 
-int main()
-{
-    int cases; cin >> cases;
-    for (int cas = 0; cas < cases; cas++)
-    {
-        unordered_map<long long int, int>mpp;
-        int n; cin >> n;
-        int ans = 0;
-        for (int i = 0; i < n; i++) {
-            long long int t; cin >> t;
-            mpp[t]++;
+
+
+int main(){
+        long long int testcases;
+        cin >> testcases;
+        for (long long int cas = 0; cas < testcases; cas++) 
+        {
+            long long int n; cin >> n;            
+            long long int array[n];
+            for (long long int i = 0 ; i < n; i++) cin >> array[i];
+
+            vector <long long int> sums(n, 0);    
+            unordered_map  <long long int,long long int> dict;    
+            long long int ans = 0;
+    
+            for (long long int i = 0 ; i < n ; i++){
+                if (i != 0) sums[i] = sums[i - 1];    
+                sums[i] += dict[array[i]];
+                dict[array[i]] += (i + 1);
+                ans += sums[i];
+            }     
+            cout << ans << endl;
         }
-        for (auto it:mpp){
-            int v = it.second;
-            cout << v<<' ';
-            ans += ( v*(v-1)/2);
-        }
-        cout << ans << endl;
-    }
 }
